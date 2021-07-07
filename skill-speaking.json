@@ -1,0 +1,299 @@
+{
+  "intents": [
+    {
+      "intent": "Reservations",
+      "examples": [
+        {
+          "text": "Do you have reservations available?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "welcome_skill",
+      "examples": [
+        {
+          "text": "hello"
+        },
+        {
+          "text": "hi"
+        },
+        {
+          "text": "welcome"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "Games",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Call of Duty",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "PUBG",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-date",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-number",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-time",
+      "values": [],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_4_1625152412485",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_7_1625152489821",
+      "context": {
+        "date": "@sys-date"
+      },
+      "conditions": "@sys-date",
+      "event_name": "input",
+      "dialog_node": "handler_1_1625152489833"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "which time?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_8_1625152600237",
+      "event_name": "focus",
+      "dialog_node": "handler_1_1625152600241",
+      "previous_sibling": "handler_3_1625152600241"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_8_1625152600237",
+      "context": {
+        "time": "@sys-time"
+      },
+      "conditions": "@sys-time",
+      "event_name": "input",
+      "dialog_node": "handler_3_1625152600241"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "how many people?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_7_1625152755425",
+      "event_name": "focus",
+      "dialog_node": "handler_3_1625152755426",
+      "previous_sibling": "handler_8_1625152755426"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_7_1625152755425",
+      "context": {
+        "number": "@sys-number"
+      },
+      "conditions": "@sys-number",
+      "event_name": "input",
+      "dialog_node": "handler_8_1625152755426"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "which day?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "slot_7_1625152489821",
+      "event_name": "focus",
+      "dialog_node": "handler_9_1625152489833",
+      "previous_sibling": "handler_1_1625152489833"
+    },
+    {
+      "type": "standard",
+      "title": "welcome node",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "hello"
+              },
+              {
+                "text": "hi"
+              },
+              {
+                "text": "welcome"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "#welcome_skill",
+      "dialog_node": "node_10_1625150947315",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "frame",
+      "title": "Reservations",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok done"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Reservations",
+      "dialog_node": "node_4_1625152412485",
+      "previous_sibling": "node_10_1625150947315"
+    },
+    {
+      "type": "slot",
+      "parent": "node_4_1625152412485",
+      "variable": "$date",
+      "dialog_node": "slot_7_1625152489821"
+    },
+    {
+      "type": "slot",
+      "parent": "node_4_1625152412485",
+      "variable": "$number",
+      "dialog_node": "slot_7_1625152755425",
+      "previous_sibling": "slot_8_1625152600237"
+    },
+    {
+      "type": "slot",
+      "parent": "node_4_1625152412485",
+      "variable": "$time",
+      "dialog_node": "slot_8_1625152600237",
+      "previous_sibling": "slot_7_1625152489821"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "welcome :)"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "intent_classification": {
+      "training_backend_version": "v2"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "speaking",
+  "language": "en",
+  "description": ""
+}
